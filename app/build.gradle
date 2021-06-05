@@ -1,17 +1,20 @@
 plugins {
-    id 'com.android.application'
-    id 'kotlin-android'
+	id("com.android.application")
+	id("kotlin-android")
+	id("kotlin-parcelize")
+	id("kotlin-kapt")
+	id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion rootProject.ext.compileSdk
 
     defaultConfig {
         applicationId "com.softcube.re_reddit"
-        minSdkVersion 28
-        targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion rootProject.ext.minSdk
+        targetSdkVersion rootProject.ext.targetSdk
+		versionCode rootProject.ext.versionCodeMajor * 10000 + rootProject.ext.versionCodeMinor * 100 + rootProject.ext.versionCodePatch
+		versionName rootProject.ext.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -22,21 +25,44 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
+	testOptions.unitTests {
+		includeAndroidResources = true
+	}
+
+	compileOptions {
+		sourceCompatibility JavaVersion.VERSION_1_8
+		targetCompatibility JavaVersion.VERSION_1_8
+	}
+
+	kotlinOptions {
+		jvmTarget = JavaVersion.VERSION_1_8.toString()
+	}
+
+	buildFeatures {
+		viewBinding true
+		dataBinding true
+	}
 }
 
 dependencies {
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.5.0'
-    implementation 'androidx.appcompat:appcompat:1.3.0'
-    implementation 'com.google.android.material:material:1.3.0'
+	//Jetpack
+	implementation rootProject.ext.appDependencies.appCompat
+	implementation rootProject.ext.appDependencies.androidxKtx
+	implementation rootProject.ext.appDependencies.constraintLayout
+	implementation rootProject.ext.appDependencies.fragmentKtx
+	implementation rootProject.ext.appDependencies.lifecycleExtensions
+	implementation rootProject.ext.appDependencies.navFragment
+	implementation rootProject.ext.appDependencies.navUIKtx
+	implementation rootProject.ext.appDependencies.lifecycleCommons
+
+	//Material
+	implementation rootProject.ext.appDependencies.material
+
+	// Koin
+	implementation rootProject.ext.appDependencies.koinAndroid
+	implementation rootProject.ext.appDependencies.koinAndroidViewModel
+
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
