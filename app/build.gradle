@@ -60,10 +60,21 @@ dependencies {
 	implementation rootProject.ext.appDependencies.material
 
 	// Koin
-	implementation rootProject.ext.appDependencies.koinAndroid
-	implementation rootProject.ext.appDependencies.koinAndroidViewModel
+	implementation rootProject.ext.diDependencies.koinAndroid
+	implementation rootProject.ext.diDependencies.koinAndroidViewModel
 
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+	//Data
+	implementation rootProject.ext.dataDependencies.retrofit
+	implementation rootProject.ext.dataDependencies.gsonConverter
+	implementation rootProject.ext.dataDependencies.loggingInterceptor
+
+	//Test Libs
+	testImplementation rootProject.ext.testDependencies.junit
+	testImplementation rootProject.ext.testDependencies.androidxJunit
+	testImplementation rootProject.ext.testDependencies.googleTruth
+	testImplementation rootProject.ext.testDependencies.coroutinesTest
+	testImplementation rootProject.ext.testDependencies.koinTest
+	testImplementation rootProject.ext.testDependencies.archComponentTest
+	androidTestImplementation rootProject.ext.testDependencies.androidxJunit
+	androidTestImplementation rootProject.ext.testDependencies.koinTest
 }
