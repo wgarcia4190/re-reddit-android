@@ -17,6 +17,11 @@ android {
 		versionName rootProject.ext.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+		buildConfigField "String", 'AUTH_URL', '"https://www.reddit.com"'
+		buildConfigField "String", 'DATA_URL', '"https://oauth.reddit.com"'
+		buildConfigField "String", 'CLIENT_ID', '"L3L7eQWmhD-XtQ"'
+		buildConfigField "String", 'PASSWORD', '"client_secret"'
     }
 
     buildTypes {

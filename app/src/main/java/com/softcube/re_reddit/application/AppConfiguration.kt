@@ -1,5 +1,7 @@
 package com.softcube.re_reddit.application
 
+import com.softcube.re_reddit.BuildConfig
+
 /**
  * com.softcube.re_reddit.application
  *
@@ -7,4 +9,15 @@ package com.softcube.re_reddit.application
  * Copyright © 2021 Wilson Garcia. All rights reserved.
  */
 object AppConfiguration {
+	val apiAuthURL: String
+		get() = BuildConfig.AUTH_URL
+
+	val apiDataURL: String
+		get() = BuildConfig.DATA_URL
+
+	val basicAuthUser: String
+		get() = BuildConfig.CLIENT_ID
+
+	val basicAuthPassword: String
+		get() = BuildConfig.PASSWORD
 }
