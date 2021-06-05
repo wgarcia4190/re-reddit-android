@@ -3,6 +3,7 @@ package com.softcube.re_reddit.application.di
 import com.softcube.re_reddit.application.AppConfiguration
 import com.softcube.re_reddit.application.network.BasicAuthInterceptor
 import com.softcube.re_reddit.application.network.BearerAuthInterceptor
+import com.softcube.re_reddit.data.remote.api.AuthService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.core.qualifier.named
@@ -22,6 +23,7 @@ val networkModule = module {
 	single(named("authRetrofit")) { provideRetrofit(okHttpClient = get(named("authHttp")), url = AppConfiguration.apiAuthURL) }
 	single(named("dataHttp")) { provideDataOkHttpClient() }
 	single(named("authHttp")) { provideBasicAuthOkHttpClient() }
+	single { provideAuthenticationService(retrofit = get(named("authRetrofit"))) }
 }
 
 internal fun provideBasicAuthOkHttpClient(): OkHttpClient {
@@ -60,3 +62,6 @@ internal fun provideRetrofit(okHttpClient: OkHttpClient, url: String): Retrofit 
 		.addConverterFactory(GsonConverterFactory.create())
 		.build()
 }
+
+internal fun provideAuthenticationService(retrofit: Retrofit): AuthService =
+	retrofit.create(AuthService::class.java)

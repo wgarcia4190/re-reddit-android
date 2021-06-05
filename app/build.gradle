@@ -22,6 +22,7 @@ android {
 		buildConfigField "String", 'DATA_URL', '"https://oauth.reddit.com"'
 		buildConfigField "String", 'CLIENT_ID', '"L3L7eQWmhD-XtQ"'
 		buildConfigField "String", 'PASSWORD', '"client_secret"'
+		buildConfigField "String", 'GRANT_TYPE', '"https://oauth.reddit.com/grants/installed_client"'
     }
 
     buildTypes {

@@ -20,4 +20,7 @@ object AppConfiguration {
 
 	val basicAuthPassword: String
 		get() = BuildConfig.PASSWORD
+
+	val grantType: String
+		get() = BuildConfig.GRANT_TYPE
 }
