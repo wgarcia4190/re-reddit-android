@@ -28,6 +28,7 @@ ext {
 	lifecycleCommonsVersion = '2.2.0'
 	navVersion = '2.3.2'
 	swipeVersion = '1.1.0'
+	glideVersion = '4.11.0'
 
 	// DI
 	koinVersion = '2.1.5'
@@ -57,7 +58,9 @@ ext {
 			lifecycleCommons      : "androidx.lifecycle:lifecycle-common-java8:$lifecycleCommonsVersion",
 			navFragment    		  : "androidx.navigation:navigation-fragment-ktx:$navVersion",
 			navUIKtx  			  : "androidx.navigation:navigation-ui-ktx:$navVersion",
-			swipe				  : "androidx.swiperefreshlayout:swiperefreshlayout:$swipeVersion"
+			swipe				  : "androidx.swiperefreshlayout:swiperefreshlayout:$swipeVersion",
+			glide    			  : "com.github.bumptech.glide:glide:$glideVersion",
+			glideCompiler  		  : "com.github.bumptech.glide:compiler:$glideVersion"
 	]
 
 	diDependencies = [

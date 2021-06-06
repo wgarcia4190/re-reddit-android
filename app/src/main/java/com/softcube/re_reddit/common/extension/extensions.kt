@@ -1,6 +1,9 @@
 package com.softcube.re_reddit.common.extension
 
+import android.view.View
+import android.widget.ImageView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.bumptech.glide.Glide
 
 /**
  * com.softcube.re_reddit.common.extension
@@ -42,4 +45,40 @@ fun SwipeRefreshLayout.toggleLoading(show: Boolean) {
 	this.post {
 		this.isRefreshing = show
 	}
+}
+
+fun View.visibleIf(show: Boolean) {
+	this.visibility = if(show) View.VISIBLE else View.GONE
+}
+
+fun ImageView.loadUrl(url: String?) {
+	this.visibleIf(!url.isNullOrBlank())
+	if (!url.isNullOrBlank()) {
+		Glide.with(this.context)
+			.load(url)
+			.into(this)
+	}
+}
+
+inline fun <reified R> Any?.whatIfNotNullAs(
+	whatIf: (R) -> Unit,
+	whatIfNot: () -> Unit
+): Any? {
+
+	if (this != null && this is R) {
+		whatIf(this as R)
+		return this
+	}
+	whatIfNot()
+	return this
+}
+
+inline fun <reified R> Any?.whatIfNotNullAs(
+	whatIf: (R) -> Unit
+): Any? {
+
+	return whatIfNotNullAs(
+		whatIf = whatIf,
+		whatIfNot = { }
+	)
 }

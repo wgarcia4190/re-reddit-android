@@ -71,6 +71,8 @@ dependencies {
 
 	// UI
 	implementation rootProject.ext.appDependencies.swipe
+	implementation rootProject.ext.appDependencies.glide
+	kapt rootProject.ext.appDependencies.glideCompiler
 
 	// Koin
 	implementation rootProject.ext.diDependencies.koinAndroid

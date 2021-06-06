@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools">
+
+	<data>
+		<variable
+			name="post"
+			type="com.softcube.re_reddit.domain.model.Post" />
+	</data>
+
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/primary"
+		android:layout_marginBottom="@dimen/item_margin_bottom">
+
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:id="@+id/topData"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/top_data_padding_h"
+			android:orientation="vertical"
+			android:paddingVertical="@dimen/top_data_padding_v"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent">
+
+			<com.google.android.material.textview.MaterialTextView
+				android:id="@+id/author"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@{post.author}"
+				android:textColor="@color/white"
+				android:textSize="@dimen/top_data_author_text"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintHorizontal_bias="0.0"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent"
+				tools:text="u/Sub_zero98" />
+
+			<com.google.android.material.textview.MaterialTextView
+				android:id="@+id/time"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@{post.getTime()}"
+				android:textColor="@color/text"
+				android:textSize="@dimen/top_data_time_text"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintHorizontal_bias="0.0"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/author"
+				tools:text="19 hours ago" />
+
+			<ImageButton
+				android:id="@+id/options"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:background="@android:color/transparent"
+				android:backgroundTint="@null"
+				android:contentDescription="@string/options"
+				android:padding="@dimen/top_data_click_area"
+				app:layout_constraintBottom_toBottomOf="@id/time"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toTopOf="@id/author"
+				app:srcCompat="@drawable/ic_menu" />
+
+
+			<com.google.android.material.textview.MaterialTextView
+				android:id="@+id/title"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginVertical="@dimen/top_data_margin_big"
+				android:layout_marginEnd="@dimen/top_data_padding_h"
+				android:inputType="textMultiLine"
+				android:text="@{post.title}"
+				android:textColor="@color/white"
+				android:textSize="@dimen/top_data_title_text"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/time"
+				tools:text="[OC] The Great Smoky Mountains National Park [1284 x 2778]" />
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+		<ImageView
+			android:id="@+id/post_image"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:adjustViewBounds="true"
+			android:contentDescription="@string/post_image"
+			android:scaleType="fitXY"
+			app:loadUrl="@{post.image}"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/topData" />
+
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:id="@+id/options_container"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:paddingHorizontal="@dimen/top_data_padding_h"
+			android:paddingVertical="@dimen/options_padding_v"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/post_image">
+
+			<com.google.android.material.textview.MaterialTextView
+				android:id="@+id/comments"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:drawablePadding="@dimen/options_drawable_padding"
+				android:gravity="center_vertical"
+				android:textColor="@color/text"
+				android:textSize="@dimen/options_text"
+				android:textStyle="bold"
+				android:text="@{post.getTotalComments()}"
+				app:drawableStartCompat="@drawable/ic_comments"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent"
+				tools:text="300" />
+
+			<com.google.android.material.textview.MaterialTextView
+				android:id="@+id/dismiss_post"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:drawablePadding="@dimen/options_drawable_padding"
+				android:gravity="center_vertical"
+				android:text="@string/dismiss_post"
+				android:textColor="@color/text"
+				android:textSize="@dimen/options_text"
+				android:textStyle="bold"
+				app:drawableStartCompat="@drawable/ic_dismiss"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent" />
+
+			<com.google.android.material.textview.MaterialTextView
+				android:id="@+id/status"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:drawablePadding="@dimen/options_drawable_padding"
+				android:gravity="center_vertical"
+				android:text="@{post.clicked ? @string/read : @string/unread}"
+				android:textColor="@color/text"
+				android:textSize="@dimen/options_text"
+				android:textStyle="bold"
+				app:drawableStartCompat="@drawable/ic_unread"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toTopOf="parent"
+				tools:drawableStart="@drawable/ic_unread"
+				tools:text="Unread" />
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

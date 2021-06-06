@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto">
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools">
 
 	<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 		android:id="@+id/pull_to_refresh"
@@ -67,12 +68,16 @@
 
 			<androidx.recyclerview.widget.RecyclerView
 				android:id="@+id/post_list"
-				android:layout_width="0dp"
-				android:layout_height="match_parent"
+				android:layout_width="match_parent"
+				android:layout_height="0dp"
+				android:background="@color/black"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintBottom_toBottomOf="parent"
-				app:layout_constraintTop_toBottomOf="@id/sub_header_divider"/>
+				app:layout_constraintTop_toBottomOf="@id/sub_header_divider"
+				app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+				tools:itemCount="3"
+				tools:listitem="@layout/post_item"/>
 
 		</androidx.constraintlayout.widget.ConstraintLayout>
 	</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

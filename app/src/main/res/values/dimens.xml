@@ -10,4 +10,17 @@
 	<dimen name="top_icon">17dp</dimen>
 	<dimen name="top_icon_padding">8dp</dimen>
 	<dimen name="sub_header_divider">0.5dp</dimen>
+	<dimen name="top_data_padding_v">10dp</dimen>
+	<dimen name="top_data_padding_h">20dp</dimen>
+	<dimen name="top_data_author_text">13sp</dimen>
+	<dimen name="top_data_time_text">11sp</dimen>
+	<dimen name="top_data_margin_small">2dp</dimen>
+	<dimen name="top_data_margin_big">5dp</dimen>
+	<dimen name="top_data_click_area">10dp</dimen>
+	<dimen name="top_data_title_text">16sp</dimen>
+	<dimen name="options_text">12sp</dimen>
+	<dimen name="options_padding_v">20dp</dimen>
+	<dimen name="options_drawable_padding">5dp</dimen>
+	<dimen name="options_drawable_size">17dp</dimen>
+	<dimen name="item_margin_bottom">5dp</dimen>
 </resources>

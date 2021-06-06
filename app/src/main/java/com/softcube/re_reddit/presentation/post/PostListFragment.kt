@@ -5,15 +5,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AbsListView
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.RecyclerView
 import com.softcube.re_reddit.application.base.BaseFragment
-import com.softcube.re_reddit.common.SessionManager
 import com.softcube.re_reddit.common.Status
 import com.softcube.re_reddit.common.UNKNOWN_ERROR_MESSAGE
 import com.softcube.re_reddit.common.autoCleared
 import com.softcube.re_reddit.common.extension.toggleLoading
+import com.softcube.re_reddit.common.extension.whatIfNotNullAs
 import com.softcube.re_reddit.databinding.FragmentPostListBinding
-import com.softcube.re_reddit.presentation.splash.SplashFragmentDirections
+import com.softcube.re_reddit.domain.model.Post
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -38,14 +40,30 @@ class PostListFragment: BaseFragment() {
 		observeViewState()
 		viewModel.getPosts()
 
-		setupEvents()
+		setupUI()
 
 		return binding.root
 	}
 
-	private fun setupEvents() {
+	private fun setupUI() {
 		binding.pullToRefresh.setOnRefreshListener {
 			viewModel.refresh()
+		}
+
+		binding.postList.apply {
+			adapter = PostListAdapter{ post ->
+				navigateTo(PostListFragmentDirections.toPostDetails(post))
+			}
+
+			addOnScrollListener(object : RecyclerView.OnScrollListener(){
+				override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+					super.onScrollStateChanged(recyclerView, newState)
+
+					if (!recyclerView.canScrollVertically(1) && newState==RecyclerView.SCROLL_STATE_IDLE && viewModel.count < 50) {
+						viewModel.getPosts()
+					}
+				}
+			})
 		}
 	}
 
@@ -57,9 +75,7 @@ class PostListFragment: BaseFragment() {
 					Status.LOADING -> binding.pullToRefresh.toggleLoading(true)
 					Status.SUCCESS -> {
 						binding.pullToRefresh.toggleLoading(false)
-						state.data?.let {
-							Log.d("PostListFragment", it.size.toString())
-						}
+						loadData(state.data)
 
 					}
 					Status.ERROR -> {
@@ -70,5 +86,16 @@ class PostListFragment: BaseFragment() {
 				}
 			}
 		)
+	}
+
+	private fun loadData(posts: List<Post>?) {
+		posts?.let { data ->
+			Log.d("PostListFragment", data.size.toString())
+			binding.postList.apply {
+				adapter.whatIfNotNullAs<PostListAdapter> {
+					it.updatePostList(data)
+				}
+			}
+		}
 	}
 }

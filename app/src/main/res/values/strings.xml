@@ -3,4 +3,9 @@
     <string name="logo">Logo</string>
 	<string name="header">Reddit Posts</string>
 	<string name="top_post">TOP POST</string>
+	<string name="options">options</string>
+	<string name="post_image">post_image</string>
+	<string name="dismiss_post">Dismiss Post</string>
+	<string name="read">Read</string>
+	<string name="unread">Unread</string>
 </resources>

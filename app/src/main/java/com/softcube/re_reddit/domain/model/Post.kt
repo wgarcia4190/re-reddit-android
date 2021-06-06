@@ -21,7 +21,8 @@ data class Post(
 	val clicked: Boolean = false
 ): Parcelable {
 	fun hasImage(): Boolean = image != null
-	fun time(): String = created.toTimeAgo()
+	fun getTime(): String = created.toTimeAgo()
+	fun getTotalComments(): String = totalComments.toString()
 }
 
 @Parcelize

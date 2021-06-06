@@ -18,5 +18,18 @@
 		android:id="@+id/postListFragment"
 		android:name="com.softcube.re_reddit.presentation.post.PostListFragment"
 		android:label="PostListFragment"
-		tools:layout="@layout/fragment_post_list"/>
+		tools:layout="@layout/fragment_post_list">
+		<action
+			android:id="@+id/toPostDetails"
+			app:destination="@id/postDetailsFragment" />
+	</fragment>
+	<fragment
+		android:id="@+id/postDetailsFragment"
+		android:name="com.softcube.re_reddit.presentation.post.PostDetailsFragment"
+		android:label="PostDetailsFragment"
+		tools:layout="@layout/fragment_post_details">
+		<argument
+			android:name="Post"
+			app:argType="com.softcube.re_reddit.domain.model.Post" />
+	</fragment>
 </navigation>
