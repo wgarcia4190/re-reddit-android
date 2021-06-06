@@ -2,6 +2,7 @@ package com.softcube.re_reddit.domain.repository
 
 import com.softcube.re_reddit.domain.model.AccessToken
 import com.softcube.re_reddit.domain.model.Post
+import com.softcube.re_reddit.domain.model.PostResponse
 
 /**
  * com.softcube.re_reddit.domain.repository
@@ -10,5 +11,5 @@ import com.softcube.re_reddit.domain.model.Post
  * Copyright © 2021 Wilson Garcia. All rights reserved.
  */
 interface PostRepository {
-	suspend fun getPosts(after: String = ""): List<Post>
+	suspend fun getPosts(after: String = ""): PostResponse
 }

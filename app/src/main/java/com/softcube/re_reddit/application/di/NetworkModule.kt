@@ -25,8 +25,8 @@ val networkModule = module {
 	single(named("authRetrofit")) { provideRetrofit(okHttpClient = get(named("authHttp")), url = AppConfiguration.apiAuthURL) }
 	single(named("dataHttp")) { provideDataOkHttpClient() }
 	single(named("authHttp")) { provideBasicAuthOkHttpClient() }
-	single { provideAuthenticationService(retrofit = get(named("authRetrofit"))) }
-	single { providePostService(retrofit = get(named("dataRetrofit"))) }
+	single(named("authService")) { provideAuthenticationService(retrofit = get(named("authRetrofit"))) }
+	single(named("postService")) { providePostService(retrofit = get(named("dataRetrofit"))) }
 }
 
 internal fun provideBasicAuthOkHttpClient(): OkHttpClient {
@@ -53,7 +53,7 @@ internal fun provideDataOkHttpClient(): OkHttpClient {
 		.readTimeout(60L, TimeUnit.SECONDS)
 		.addInterceptor(httpLoggingInterceptor)
 		.addInterceptor(BearerAuthInterceptor(
-			token = SessionManager.accessToken.token
+			token = SessionManager.accessToken.getTokenHeaderValue()
 		))
 		.build()
 }

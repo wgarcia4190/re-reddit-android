@@ -3,6 +3,7 @@ package com.softcube.re_reddit.data.remote.model
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import com.softcube.re_reddit.domain.model.Post
+import com.softcube.re_reddit.domain.model.PostResponse
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -15,8 +16,15 @@ import kotlinx.parcelize.Parcelize
 data class PostsResponseDTO(
 	@SerializedName("kind") val kind: String,
 	@SerializedName("data") val data: PostsDataDTO,
-): Parcelable {
-	fun getPosts(): List<Post> = data.getPosts()
+): Entity<PostResponse> {
+	private fun getPosts(): List<Post> = data.getPosts()
+
+	override fun toDomain(): PostResponse {
+		return PostResponse(
+			posts = getPosts(),
+			after = data.after
+		)
+	}
 }
 
 @Parcelize
@@ -31,7 +39,7 @@ data class PostsDataDTO(
 	@SerializedName("modhash") val hash: String,
 	@SerializedName("dist") val total: Int,
 	@SerializedName("children") val children: List<PostsChildrenDTO>,
-	@SerializedName("after") val after: String?,
+	@SerializedName("after") val after: String,
 	@SerializedName("before") val before: String?,
 ) : Parcelable {
 	fun getPosts(): List<Post> {

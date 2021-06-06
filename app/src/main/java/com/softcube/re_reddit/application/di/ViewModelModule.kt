@@ -1,5 +1,6 @@
 package com.softcube.re_reddit.application.di
 
+import com.softcube.re_reddit.presentation.post.PostListViewModel
 import com.softcube.re_reddit.presentation.splash.SplashViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
@@ -15,6 +16,12 @@ val viewModelModule = module {
 	viewModel {
 		SplashViewModel(
 			authUseCase = get(named("authenticateUseCase"))
+		)
+	}
+
+	viewModel {
+		PostListViewModel(
+			postsUseCase = get(named("getPostsUseCase"))
 		)
 	}
 }

@@ -1,6 +1,7 @@
 package com.softcube.re_reddit.domain.model
 
 import android.os.Parcelable
+import com.softcube.re_reddit.common.extension.toTimeAgo
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -20,4 +21,11 @@ data class Post(
 	val clicked: Boolean = false
 ): Parcelable {
 	fun hasImage(): Boolean = image != null
+	fun time(): String = created.toTimeAgo()
 }
+
+@Parcelize
+data class PostResponse(
+	val posts: List<Post>,
+	val after: String
+): Parcelable

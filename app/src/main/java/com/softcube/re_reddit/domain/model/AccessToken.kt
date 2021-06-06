@@ -12,5 +12,8 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class AccessToken(
 	val token: String,
+	val type: String,
 	val expiresIn: Int
-): Parcelable
+): Parcelable {
+	fun getTokenHeaderValue(): String = "$type $token"
+}

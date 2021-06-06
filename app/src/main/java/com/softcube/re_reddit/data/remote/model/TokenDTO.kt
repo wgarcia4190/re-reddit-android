@@ -21,6 +21,7 @@ data class TokenDTO(
 
 	override fun toDomain(): AccessToken = AccessToken(
 		token = accessToken,
+		type = tokenType,
 		expiresIn = expiresIn
 	)
 }

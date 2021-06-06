@@ -1,6 +1,7 @@
 package com.softcube.re_reddit.data.remote.api
 
 import com.softcube.re_reddit.application.AppConfiguration
+import com.softcube.re_reddit.data.remote.model.PostsResponseDTO
 import com.softcube.re_reddit.data.remote.model.TokenDTO
 import retrofit2.http.Field
 import retrofit2.http.GET
@@ -18,5 +19,5 @@ interface PostService {
 		@Query("t") time: String = "hour",
 		@Query("limit") limit: Int = 10,
 		@Query("after") after: String = ""
-	): TokenDTO
+	): PostsResponseDTO
 }
