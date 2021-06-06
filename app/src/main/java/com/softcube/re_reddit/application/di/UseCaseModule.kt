@@ -13,7 +13,7 @@ import org.koin.dsl.module
  * Copyright © 2021 Wilson Garcia. All rights reserved.
  */
 val useCasesModule = module {
-	single(named("authenticateUseCase")) { AuthenticateUseCase(get()) }
+	single(named("authenticateUseCase")) { provideAuthenticateUseCase(get()) }
 }
 
 fun provideAuthenticateUseCase(repository: AuthRepository): AuthenticateBaseUseCase {

@@ -3,6 +3,7 @@ package com.softcube.re_reddit.application.di
 import com.softcube.re_reddit.application.AppConfiguration
 import com.softcube.re_reddit.application.network.BasicAuthInterceptor
 import com.softcube.re_reddit.application.network.BearerAuthInterceptor
+import com.softcube.re_reddit.common.SessionManager
 import com.softcube.re_reddit.data.remote.api.AuthService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -50,7 +51,7 @@ internal fun provideDataOkHttpClient(): OkHttpClient {
 		.readTimeout(60L, TimeUnit.SECONDS)
 		.addInterceptor(httpLoggingInterceptor)
 		.addInterceptor(BearerAuthInterceptor(
-			token = ""
+			token = SessionManager.accessToken.token
 		))
 		.build()
 }
