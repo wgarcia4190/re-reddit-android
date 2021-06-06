@@ -26,7 +26,8 @@ ext {
 	leakCanaryVersion = '2.0'
 	lifecycleExtensionsVersion = '2.1.0'
 	lifecycleCommonsVersion = '2.2.0'
-	navVersion = "2.3.2"
+	navVersion = '2.3.2'
+	swipeVersion = '1.1.0'
 
 	// DI
 	koinVersion = '2.1.5'
@@ -56,6 +57,7 @@ ext {
 			lifecycleCommons      : "androidx.lifecycle:lifecycle-common-java8:$lifecycleCommonsVersion",
 			navFragment    		  : "androidx.navigation:navigation-fragment-ktx:$navVersion",
 			navUIKtx  			  : "androidx.navigation:navigation-ui-ktx:$navVersion",
+			swipe				  : "androidx.swiperefreshlayout:swiperefreshlayout:$swipeVersion"
 	]
 
 	diDependencies = [

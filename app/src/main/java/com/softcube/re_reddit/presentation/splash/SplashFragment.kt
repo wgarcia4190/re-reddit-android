@@ -48,6 +48,8 @@ class SplashFragment : BaseFragment() {
 						state.data?.let {
 							SessionManager.accessToken = it
 							Log.d("SplashFragment", it.token)
+
+							navigateTo(SplashFragmentDirections.toPostList())
 						}
 
 					}

@@ -5,6 +5,7 @@ import com.softcube.re_reddit.application.network.BasicAuthInterceptor
 import com.softcube.re_reddit.application.network.BearerAuthInterceptor
 import com.softcube.re_reddit.common.SessionManager
 import com.softcube.re_reddit.data.remote.api.AuthService
+import com.softcube.re_reddit.data.remote.api.PostService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.core.qualifier.named
@@ -25,6 +26,7 @@ val networkModule = module {
 	single(named("dataHttp")) { provideDataOkHttpClient() }
 	single(named("authHttp")) { provideBasicAuthOkHttpClient() }
 	single { provideAuthenticationService(retrofit = get(named("authRetrofit"))) }
+	single { providePostService(retrofit = get(named("dataRetrofit"))) }
 }
 
 internal fun provideBasicAuthOkHttpClient(): OkHttpClient {
@@ -66,3 +68,6 @@ internal fun provideRetrofit(okHttpClient: OkHttpClient, url: String): Retrofit 
 
 internal fun provideAuthenticationService(retrofit: Retrofit): AuthService =
 	retrofit.create(AuthService::class.java)
+
+internal fun providePostService(retrofit: Retrofit): PostService =
+	retrofit.create(PostService::class.java)

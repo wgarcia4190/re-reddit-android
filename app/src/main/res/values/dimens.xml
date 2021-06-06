@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<dimen name="header_text">18sp</dimen>
+	<dimen name="header_padding_top">20dp</dimen>
+	<dimen name="header_padding_h">25dp</dimen>
+	<dimen name="divider_height">3dp</dimen>
+	<dimen name="divider_margin">17dp</dimen>
+	<dimen name="top_text">11sp</dimen>
+	<dimen name="top_padding">16dp</dimen>
+	<dimen name="top_icon">17dp</dimen>
+	<dimen name="top_icon_padding">8dp</dimen>
+	<dimen name="sub_header_divider">0.5dp</dimen>
+</resources>

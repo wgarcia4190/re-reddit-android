@@ -3,4 +3,7 @@
 	<color name="primary">#121212</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+	<color name="divider">#376dc5</color>
+	<color name="text">#8a8b8d</color>
+	<color name="light_divider">#1f1f1f</color>
 </resources>
