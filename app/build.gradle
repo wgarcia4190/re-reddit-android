@@ -48,6 +48,10 @@ android {
 		viewBinding true
 		dataBinding true
 	}
+
+	testOptions {
+		unitTests.returnDefaultValues = true
+	}
 }
 
 dependencies {
@@ -76,11 +80,10 @@ dependencies {
 
 	//Test Libs
 	testImplementation rootProject.ext.testDependencies.junit
-	testImplementation rootProject.ext.testDependencies.androidxJunit
 	testImplementation rootProject.ext.testDependencies.googleTruth
 	testImplementation rootProject.ext.testDependencies.coroutinesTest
 	testImplementation rootProject.ext.testDependencies.koinTest
 	testImplementation rootProject.ext.testDependencies.archComponentTest
-	androidTestImplementation rootProject.ext.testDependencies.androidxJunit
+	testImplementation rootProject.ext.testDependencies.jsonTest
 	androidTestImplementation rootProject.ext.testDependencies.koinTest
 }

@@ -1,5 +1,6 @@
 package com.softcube.re_reddit.common
 
+import androidx.annotation.VisibleForTesting
 import com.softcube.re_reddit.common.extension.guardEmpty
 import com.softcube.re_reddit.data.remote.model.ApiError
 import org.json.JSONObject
@@ -14,6 +15,7 @@ import java.net.SocketTimeoutException
  * Copyright © 2021 Wilson Garcia. All rights reserved.
  */
 
+@VisibleForTesting
 const val UNKNOWN_ERROR_MESSAGE = "Unknown Error!"
 
 internal object ExceptionHandler {

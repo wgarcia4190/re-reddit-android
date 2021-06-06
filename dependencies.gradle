@@ -40,10 +40,9 @@ ext {
 
 	// Testing
 	junitVersion = '4.13.1'
-	androidxJunitVersion = '1.1.2'
 	truthVersion = '1.0'
-	robolectricVersion = '4.3'
 	archComponentTestVersion = '2.1.0'
+	jsonVersion = '20210307'
 
 	// App/Presentation Layer
 	appDependencies = [
@@ -76,10 +75,10 @@ ext {
 
 	testDependencies = [
 			junit                 : "junit:junit:$junitVersion",
-			androidxJunit         : "androidx.test.ext:junit:$androidxJunitVersion",
 			googleTruth           : "com.google.truth:truth:$truthVersion",
 			coroutinesTest        : "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesCoreVersion",
 			koinTest              : "org.koin:koin-test:$koinVersion",
 			archComponentTest     : "androidx.arch.core:core-testing:$archComponentTestVersion",
+			jsonTest			  : "org.json:json:$jsonVersion"
 	]
 }
