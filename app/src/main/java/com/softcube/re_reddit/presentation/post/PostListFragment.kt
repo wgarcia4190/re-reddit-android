@@ -1,12 +1,17 @@
 package com.softcube.re_reddit.presentation.post
 
+import android.app.DownloadManager
+import android.content.Context
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AbsListView
+import android.widget.Toast
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.softcube.re_reddit.application.base.BaseFragment
@@ -19,6 +24,8 @@ import com.softcube.re_reddit.databinding.FragmentPostListBinding
 import com.softcube.re_reddit.domain.model.Post
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.io.File
+
 
 /**
  * com.softcube.re_reddit.presentation.post
@@ -26,7 +33,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  * Created by Wilson Garcia on 6/6/21
  * Copyright © 2021 Wilson Garcia. All rights reserved.
  */
-class PostListFragment: BaseFragment() {
+class PostListFragment : BaseFragment() {
 
 	private var binding by autoCleared<FragmentPostListBinding>()
 	private val viewModel: PostListViewModel by viewModel()
@@ -54,16 +61,18 @@ class PostListFragment: BaseFragment() {
 		}
 
 		binding.postList.apply {
-			adapter = PostListAdapter{ post ->
+			adapter = PostListAdapter({ url, id ->
+				addImageToGallery(url, "JPEG_${id}.jpg")
+			}) { post ->
 				sharedPreferencesEditor.putBoolean(post.id, true).apply()
 				navigateTo(PostListFragmentDirections.toPostDetails(post))
 			}
 
-			addOnScrollListener(object : RecyclerView.OnScrollListener(){
+			addOnScrollListener(object : RecyclerView.OnScrollListener() {
 				override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
 					super.onScrollStateChanged(recyclerView, newState)
 
-					if (!recyclerView.canScrollVertically(1) && newState==RecyclerView.SCROLL_STATE_IDLE && viewModel.count < 50) {
+					if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE && viewModel.count < 50) {
 						viewModel.getPosts()
 					}
 				}
@@ -84,7 +93,12 @@ class PostListFragment: BaseFragment() {
 					}
 					Status.ERROR -> {
 						binding.pullToRefresh.toggleLoading(false)
-						state.error?.let { Log.e("PostListFragment", it.message ?: UNKNOWN_ERROR_MESSAGE) }
+						state.error?.let {
+							Log.e(
+								"PostListFragment",
+								it.message ?: UNKNOWN_ERROR_MESSAGE
+							)
+						}
 					}
 					else -> print("NONE")
 				}
@@ -99,6 +113,31 @@ class PostListFragment: BaseFragment() {
 				adapter.whatIfNotNullAs<PostListAdapter> {
 					it.updatePostList(data)
 				}
+			}
+		}
+	}
+
+	private fun addImageToGallery(url: String?, fileName: String) {
+
+		url?.let { path ->
+			try {
+				val dm = requireActivity().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager?
+				val downloadUri = Uri.parse(path)
+				val request = DownloadManager.Request(downloadUri)
+				request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
+					.setAllowedOverRoaming(false)
+					.setTitle(fileName)
+					.setMimeType("image/jpeg")
+					.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+					.setDestinationInExternalPublicDir(
+						Environment.DIRECTORY_PICTURES,
+						File.separator + fileName
+					)
+				dm?.enqueue(request)
+				Toast.makeText(requireContext(), "Image download started.", Toast.LENGTH_SHORT).show()
+			} catch (e: Exception) {
+				e.printStackTrace()
+				Toast.makeText(requireContext(), "Image download failed.", Toast.LENGTH_SHORT).show()
 			}
 		}
 	}

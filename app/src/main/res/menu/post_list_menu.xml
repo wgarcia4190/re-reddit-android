@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:id="@+id/dismiss_post"
+		android:icon="@drawable/ic_hide"
+		android:title="@string/dismiss_post" />
+	<item android:id="@+id/download"
+		android:icon="@drawable/ic_download"
+		android:title="@string/download_image" />
+</menu>

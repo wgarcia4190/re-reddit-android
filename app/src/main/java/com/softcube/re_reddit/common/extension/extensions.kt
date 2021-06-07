@@ -4,6 +4,7 @@ import android.view.View
 import android.widget.ImageView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
+import com.softcube.re_reddit.common.GlideInstance
 
 /**
  * com.softcube.re_reddit.common.extension
@@ -54,7 +55,7 @@ fun View.visibleIf(show: Boolean) {
 fun ImageView.loadUrl(url: String?) {
 	this.visibleIf(!url.isNullOrBlank())
 	if (!url.isNullOrBlank()) {
-		Glide.with(this.context)
+		GlideInstance.glide
 			.load(url)
 			.into(this)
 	}

@@ -21,8 +21,18 @@ import java.util.concurrent.TimeUnit
  * Copyright © 2021 Wilson Garcia. All rights reserved.
  */
 val networkModule = module {
-	single(named("dataRetrofit")) { provideRetrofit(okHttpClient = get(named("dataHttp")), url = AppConfiguration.apiDataURL) }
-	single(named("authRetrofit")) { provideRetrofit(okHttpClient = get(named("authHttp")), url = AppConfiguration.apiAuthURL) }
+	single(named("dataRetrofit")) {
+		provideRetrofit(
+			okHttpClient = get(named("dataHttp")),
+			url = AppConfiguration.apiDataURL
+		)
+	}
+	single(named("authRetrofit")) {
+		provideRetrofit(
+			okHttpClient = get(named("authHttp")),
+			url = AppConfiguration.apiAuthURL
+		)
+	}
 	single(named("dataHttp")) { provideDataOkHttpClient() }
 	single(named("authHttp")) { provideBasicAuthOkHttpClient() }
 	single(named("authService")) { provideAuthenticationService(retrofit = get(named("authRetrofit"))) }
@@ -37,10 +47,12 @@ internal fun provideBasicAuthOkHttpClient(): OkHttpClient {
 		.connectTimeout(60L, TimeUnit.SECONDS)
 		.readTimeout(60L, TimeUnit.SECONDS)
 		.addInterceptor(httpLoggingInterceptor)
-		.addInterceptor(BasicAuthInterceptor(
-			user = AppConfiguration.basicAuthUser,
-			password = AppConfiguration.basicAuthPassword
-		))
+		.addInterceptor(
+			BasicAuthInterceptor(
+				user = AppConfiguration.basicAuthUser,
+				password = AppConfiguration.basicAuthPassword
+			)
+		)
 		.build()
 }
 
@@ -52,9 +64,11 @@ internal fun provideDataOkHttpClient(): OkHttpClient {
 		.connectTimeout(60L, TimeUnit.SECONDS)
 		.readTimeout(60L, TimeUnit.SECONDS)
 		.addInterceptor(httpLoggingInterceptor)
-		.addInterceptor(BearerAuthInterceptor(
-			token = SessionManager.accessToken.getTokenHeaderValue()
-		))
+		.addInterceptor(
+			BearerAuthInterceptor(
+				token = SessionManager.accessToken.getTokenHeaderValue()
+			)
+		)
 		.build()
 }
 

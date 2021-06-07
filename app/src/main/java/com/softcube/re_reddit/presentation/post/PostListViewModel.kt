@@ -5,15 +5,11 @@ import com.softcube.re_reddit.application.base.BaseViewModel
 import com.softcube.re_reddit.common.ExceptionHandler
 import com.softcube.re_reddit.common.Status
 import com.softcube.re_reddit.data.remote.model.ApiError
-import com.softcube.re_reddit.domain.model.AccessToken
 import com.softcube.re_reddit.domain.model.Post
 import com.softcube.re_reddit.domain.usecase.GetPostsBaseUseCase
-import com.softcube.re_reddit.presentation.splash.SplashViewState
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
-import java.util.*
-
 /**
  * com.softcube.re_reddit.presentation.post
  *
@@ -28,7 +24,10 @@ data class PostListViewState(
 	var error: ApiError?
 )
 
-class PostListViewModel(private val postsUseCase: GetPostsBaseUseCase, private val sharedPreferences: SharedPreferences) : BaseViewModel<PostListViewState>() {
+class PostListViewModel(
+	private val postsUseCase: GetPostsBaseUseCase,
+	private val sharedPreferences: SharedPreferences
+) : BaseViewModel<PostListViewState>() {
 
 	private var postsJob: Job? = null
 	val count: Int
@@ -40,7 +39,8 @@ class PostListViewModel(private val postsUseCase: GetPostsBaseUseCase, private v
 	}
 
 	init {
-		stateMutableLiveData.value = PostListViewState(status = Status.NONE, data = null, after = null, error = null)
+		stateMutableLiveData.value =
+			PostListViewState(status = Status.NONE, data = null, after = null, error = null)
 	}
 
 	fun getPosts() {
@@ -90,7 +90,7 @@ class PostListViewModel(private val postsUseCase: GetPostsBaseUseCase, private v
 			mutablePost.addAll(it)
 		}
 
-		for(post in mutablePost) {
+		for (post in mutablePost) {
 			post.clicked = sharedPreferences.getBoolean(post.id, false)
 		}
 

@@ -2,11 +2,13 @@ package com.softcube.re_reddit.presentation.post
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.softcube.re_reddit.R
 import com.softcube.re_reddit.databinding.PostItemBinding
 import com.softcube.re_reddit.domain.model.Post
+
 
 /**
  * com.softcube.re_reddit.presentation.post
@@ -15,8 +17,12 @@ import com.softcube.re_reddit.domain.model.Post
  * Copyright © 2021 Wilson Garcia. All rights reserved.
  */
 typealias PostCallback = (Post) -> Unit
+typealias DownloadCallback = (String, String) -> Unit
 
-class PostListAdapter(private val onClickListener: PostCallback) : RecyclerView.Adapter<PostListAdapter.PostViewHolder>() {
+class PostListAdapter(
+	private val downloadCallback: DownloadCallback,
+	private val onClickListener: PostCallback
+) : RecyclerView.Adapter<PostListAdapter.PostViewHolder>() {
 
 	private val items = mutableListOf<Post>()
 
@@ -58,11 +64,33 @@ class PostListAdapter(private val onClickListener: PostCallback) : RecyclerView.
 	override fun getItemCount(): Int = items.size
 
 	override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
+		val postObj = items[position]
 		holder.binding.apply {
-			post = items[position]
+			post = postObj
+			options.setOnClickListener {
+				val popup = PopupMenu(it.context, it)
+				popup.setOnMenuItemClickListener { item ->
+					when (item?.itemId) {
+						R.id.dismiss_post ->
+							true
+						R.id.download -> {
+							postObj.image?.let { image ->
+								downloadCallback(image, postObj.id)
+							}
+							true
+						}
+						else -> false
+					}
+				}
+				popup.inflate(R.menu.post_list_menu)
+				popup.menu.findItem(R.id.download).isVisible = postObj.hasImage()
+				popup.show()
+			}
+
 			executePendingBindings()
 		}
 	}
+
 
 	private fun getPost(index: Int): Post = items[index]
 

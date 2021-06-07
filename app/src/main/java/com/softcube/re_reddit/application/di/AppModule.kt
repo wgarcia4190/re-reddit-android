@@ -2,6 +2,8 @@ package com.softcube.re_reddit.application.di
 
 import android.app.Application
 import android.content.SharedPreferences
+import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 
@@ -13,15 +15,18 @@ import org.koin.dsl.module
  */
 val appModule = module {
 
-	single{
-		getSharedPrefs(androidApplication())
-	}
-
-	single<SharedPreferences.Editor> {
-		getSharedPrefs(androidApplication()).edit()
-	}
+	single { provideSharedPrefs(androidApplication()) }
+	single { provideGlide(androidApplication()) }
+	single<SharedPreferences.Editor> { provideSharedPrefs(androidApplication()).edit() }
 
 }
-internal fun getSharedPrefs(androidApplication: Application): SharedPreferences{
-	return  androidApplication.getSharedPreferences(androidApplication.packageName,  android.content.Context.MODE_PRIVATE)
+
+internal fun provideSharedPrefs(androidApplication: Application): SharedPreferences {
+	return androidApplication.getSharedPreferences(
+		androidApplication.packageName,
+		android.content.Context.MODE_PRIVATE
+	)
 }
+
+internal fun provideGlide(androidApplication: Application): RequestManager =
+	Glide.with(androidApplication)
