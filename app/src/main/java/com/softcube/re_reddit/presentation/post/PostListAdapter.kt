@@ -1,9 +1,13 @@
 package com.softcube.re_reddit.presentation.post
 
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.PopupMenu
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +24,7 @@ import com.softcube.re_reddit.domain.model.Post
  * Copyright © 2021 Wilson Garcia. All rights reserved.
  */
 typealias PostCallback = (Post) -> Unit
+typealias DeleteCallback = (Int) -> Unit
 typealias DownloadCallback = (String, String) -> Unit
 
 class PostListAdapter(
@@ -37,7 +42,10 @@ class PostListAdapter(
 			parent,
 			false
 		)
-		return PostViewHolder(binding, downloadCallback).apply {
+		return PostViewHolder(binding, downloadCallback) { pos ->
+			items.removeAt(pos)
+			notifyItemRemoved(pos)
+		}.apply {
 			binding.container.setOnClickListener {
 				showPostDetails()
 			}
@@ -64,6 +72,11 @@ class PostListAdapter(
 		notifyDataSetChanged()
 	}
 
+	fun deleteAll() {
+		items.clear()
+		notifyDataSetChanged()
+	}
+
 	override fun getItemCount(): Int = items.size
 
 	override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
@@ -73,7 +86,11 @@ class PostListAdapter(
 
 	private fun getPost(index: Int): Post = items[index]
 
-	class PostViewHolder(val binding: PostItemBinding, val downloadCallback: DownloadCallback) :
+	class PostViewHolder(
+		private val binding: PostItemBinding,
+		private val downloadCallback: DownloadCallback,
+		private val deleteCallback: DeleteCallback
+	) :
 		RecyclerView.ViewHolder(binding.root), PopupMenu.OnMenuItemClickListener {
 
 		private lateinit var postObj: Post
@@ -84,6 +101,9 @@ class PostListAdapter(
 				post = postObj
 				options.setOnClickListener {
 					showPopup(it)
+				}
+				dismissPost.setOnClickListener {
+					deleteItem()
 				}
 
 				if(postObj.clicked)
@@ -100,10 +120,25 @@ class PostListAdapter(
 			popup.show()
 		}
 
+		private fun deleteItem() {
+			val anim: Animation = AnimationUtils.loadAnimation(
+				binding.root.context,
+				android.R.anim.slide_out_right
+			)
+			anim.duration = 300
+			binding.root.startAnimation(anim)
+			Handler(Looper.getMainLooper()).postDelayed({
+				deleteCallback(adapterPosition)
+			}, anim.duration)
+
+		}
+		
 		override fun onMenuItemClick(item: MenuItem?): Boolean {
 			return when (item?.itemId) {
-				R.id.dismiss_post ->
+				R.id.dismiss_post -> {
+					deleteItem()
 					true
+				}
 				R.id.download -> {
 					postObj.image?.let { image ->
 						downloadCallback(image, postObj.id)

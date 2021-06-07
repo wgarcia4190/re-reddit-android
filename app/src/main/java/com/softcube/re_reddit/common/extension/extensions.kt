@@ -55,11 +55,12 @@ fun View.visibleIf(show: Boolean) {
 
 fun ImageView.loadUrl(url: String?) {
 	this.visibleIf(!url.isNullOrBlank())
-	if (!url.isNullOrBlank()) {
+	if (!url.isNullOrBlank() && url.contains(".jpg")) {
 		GlideInstance.glide
 			.load(url)
 			.into(this)
-	}
+	} else
+		this.visibleIf(false)
 }
 
 fun MaterialTextView.clearDrawables() {

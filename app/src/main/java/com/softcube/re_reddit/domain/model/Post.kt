@@ -21,7 +21,7 @@ data class Post(
 	val totalComments: Int,
 	var clicked: Boolean = false
 ): Parcelable {
-	fun hasImage(): Boolean = image != null
+	fun hasImage(): Boolean = image != null && image.contains(".jpg")
 	fun getTime(): String = created.toTimeAgo()
 }
 

@@ -6,10 +6,14 @@ import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
@@ -57,6 +61,21 @@ class PostListFragment : BaseFragment() {
 	private fun setupUI() {
 		binding.pullToRefresh.setOnRefreshListener {
 			viewModel.refresh()
+		}
+
+		binding.dismissAllPost.setOnClickListener {
+			val adapter: PostListAdapter? = binding.postList.adapter as PostListAdapter?
+			adapter?.let { postListAdapter ->
+				val anim: Animation = AnimationUtils.loadAnimation(
+					requireContext(),
+					android.R.anim.slide_out_right
+				)
+				anim.duration = 300
+				binding.postList.startAnimation(anim)
+				Handler(Looper.getMainLooper()).postDelayed({
+					postListAdapter.deleteAll()
+				}, anim.duration)
+			}
 		}
 
 		binding.postList.apply {
