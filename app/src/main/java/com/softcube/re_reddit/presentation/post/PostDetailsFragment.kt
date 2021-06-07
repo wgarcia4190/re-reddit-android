@@ -43,6 +43,7 @@ class PostDetailsFragment: BaseFragment(), PopupMenu.OnMenuItemClickListener {
 	}
 
 	private fun setupUI() {
+		retainInstance = true
 		binding.backButton.setOnClickListener {
 			back()
 		}

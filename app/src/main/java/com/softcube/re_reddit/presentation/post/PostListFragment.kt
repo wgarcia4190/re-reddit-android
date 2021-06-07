@@ -60,6 +60,7 @@ class PostListFragment : BaseFragment() {
 	}
 
 	private fun setupUI() {
+		retainInstance = true
 		binding.pullToRefresh.setOnRefreshListener {
 			viewModel.refresh()
 		}

@@ -27,4 +27,9 @@ class MainActivity: AppCompatActivity() {
 	}
 
 	override fun onSupportNavigateUp(): Boolean = navController.navigateUp()
+
+	override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+		super.onRestoreInstanceState(savedInstanceState)
+		onCreate(savedInstanceState)
+	}
 }
