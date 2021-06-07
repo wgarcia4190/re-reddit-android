@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.softcube.re_reddit.application.base.BaseFragment
 import com.softcube.re_reddit.common.Status
 import com.softcube.re_reddit.common.UNKNOWN_ERROR_MESSAGE
+import com.softcube.re_reddit.common.Utils
 import com.softcube.re_reddit.common.autoCleared
 import com.softcube.re_reddit.common.extension.toggleLoading
 import com.softcube.re_reddit.common.extension.whatIfNotNullAs
@@ -80,7 +81,7 @@ class PostListFragment : BaseFragment() {
 
 		binding.postList.apply {
 			adapter = PostListAdapter({ url, id ->
-				addImageToGallery(url, "JPEG_${id}.jpg")
+				Utils.addImageToGallery(url, "JPEG_${id}.jpg", requireActivity())
 			}) { post ->
 				sharedPreferencesEditor.putBoolean(post.id, true).apply()
 				navigateTo(PostListFragmentDirections.toPostDetails(post))
@@ -131,30 +132,6 @@ class PostListFragment : BaseFragment() {
 				adapter.whatIfNotNullAs<PostListAdapter> {
 					it.updatePostList(data)
 				}
-			}
-		}
-	}
-
-	private fun addImageToGallery(url: String?, fileName: String) {
-		url?.let { path ->
-			try {
-				val dm = requireActivity().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager?
-				val downloadUri = Uri.parse(path)
-				val request = DownloadManager.Request(downloadUri)
-				request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
-					.setAllowedOverRoaming(false)
-					.setTitle(fileName)
-					.setMimeType("image/jpeg")
-					.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-					.setDestinationInExternalPublicDir(
-						Environment.DIRECTORY_PICTURES,
-						File.separator + fileName
-					)
-				dm?.enqueue(request)
-				Toast.makeText(requireContext(), "Image download started.", Toast.LENGTH_SHORT).show()
-			} catch (e: Exception) {
-				e.printStackTrace()
-				Toast.makeText(requireContext(), "Image download failed.", Toast.LENGTH_SHORT).show()
 			}
 		}
 	}

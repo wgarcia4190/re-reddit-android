@@ -23,4 +23,5 @@
 	<dimen name="options_drawable_padding">5dp</dimen>
 	<dimen name="options_drawable_size">17dp</dimen>
 	<dimen name="item_margin_bottom">5dp</dimen>
+	<dimen name="details_icons">24dp</dimen>
 </resources>

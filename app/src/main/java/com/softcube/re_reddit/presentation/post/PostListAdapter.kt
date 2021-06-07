@@ -132,7 +132,7 @@ class PostListAdapter(
 			}, anim.duration)
 
 		}
-		
+
 		override fun onMenuItemClick(item: MenuItem?): Boolean {
 			return when (item?.itemId) {
 				R.id.dismiss_post -> {

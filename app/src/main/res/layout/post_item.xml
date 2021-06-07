@@ -65,7 +65,7 @@
 				app:layout_constraintBottom_toBottomOf="@id/time"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintTop_toTopOf="@id/author"
-				app:srcCompat="@drawable/ic_menu" />
+				app:srcCompat="@drawable/ic_menu_small" />
 
 
 			<com.google.android.material.textview.MaterialTextView
