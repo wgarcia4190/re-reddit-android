@@ -29,14 +29,25 @@ class PostListAdapter(private val onClickListener: PostCallback) : RecyclerView.
 			false
 		)
 		return PostViewHolder(binding).apply {
-			binding.root.setOnClickListener { _ ->
-				val position =
-					adapterPosition.takeIf { it != RecyclerView.NO_POSITION }
-						?: return@setOnClickListener
-
-				onClickListener(getPost(position))
+			binding.container.setOnClickListener {
+				showPostDetails()
+			}
+			binding.title.setOnClickListener {
+				showPostDetails()
 			}
 		}
+	}
+
+	private fun PostViewHolder.showPostDetails() {
+		val position =
+			adapterPosition.takeIf { it != RecyclerView.NO_POSITION }
+				?: return
+
+		val post = getPost(position)
+		post.clicked = true
+
+		onClickListener(post)
+		notifyItemChanged(position)
 	}
 
 	fun updatePostList(posts: List<Post>) {

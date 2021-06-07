@@ -21,7 +21,8 @@ val viewModelModule = module {
 
 	viewModel {
 		PostListViewModel(
-			postsUseCase = get(named("getPostsUseCase"))
+			postsUseCase = get(named("getPostsUseCase")),
+			sharedPreferences = get()
 		)
 	}
 }

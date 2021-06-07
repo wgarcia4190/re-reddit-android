@@ -12,13 +12,14 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 data class Post(
+	val id: String,
 	val title: String,
 	val author: String,
 	val created: Long,
 	val thumbnail: String?,
 	val image: String?,
 	val totalComments: Int,
-	val clicked: Boolean = false
+	var clicked: Boolean = false
 ): Parcelable {
 	fun hasImage(): Boolean = image != null
 	fun getTime(): String = created.toTimeAgo()

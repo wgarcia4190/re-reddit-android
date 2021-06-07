@@ -1,10 +1,7 @@
 package com.softcube.re_reddit.application
 
 import android.app.Application
-import com.softcube.re_reddit.application.di.networkModule
-import com.softcube.re_reddit.application.di.repositoryModule
-import com.softcube.re_reddit.application.di.useCasesModule
-import com.softcube.re_reddit.application.di.viewModelModule
+import com.softcube.re_reddit.application.di.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -28,6 +25,7 @@ internal class ReRedditApp: Application() {
 		startKoin {
 			androidContext(this@ReRedditApp)
 			modules(
+				appModule,
 				networkModule,
 				useCasesModule,
 				repositoryModule,

@@ -1,5 +1,6 @@
 package com.softcube.re_reddit.presentation.post
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,6 +17,7 @@ import com.softcube.re_reddit.common.extension.toggleLoading
 import com.softcube.re_reddit.common.extension.whatIfNotNullAs
 import com.softcube.re_reddit.databinding.FragmentPostListBinding
 import com.softcube.re_reddit.domain.model.Post
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -28,6 +30,7 @@ class PostListFragment: BaseFragment() {
 
 	private var binding by autoCleared<FragmentPostListBinding>()
 	private val viewModel: PostListViewModel by viewModel()
+	private val sharedPreferencesEditor: SharedPreferences.Editor by inject()
 
 	override fun onCreateView(
 		inflater: LayoutInflater,
@@ -52,6 +55,7 @@ class PostListFragment: BaseFragment() {
 
 		binding.postList.apply {
 			adapter = PostListAdapter{ post ->
+				sharedPreferencesEditor.putBoolean(post.id, true).apply()
 				navigateTo(PostListFragmentDirections.toPostDetails(post))
 			}
 

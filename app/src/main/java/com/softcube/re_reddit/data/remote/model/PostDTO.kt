@@ -13,6 +13,7 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 data class PostDTO(
+	@SerializedName("id") val id: String,
 	@SerializedName("title") val title: String,
 	@SerializedName("author") val author: String,
 	@SerializedName("thumbnail") val thumbnail: String?,
@@ -22,6 +23,7 @@ data class PostDTO(
 	@SerializedName("is_video") val isVideo: Boolean,
 ): Entity<Post> {
 	override fun toDomain(): Post = Post(
+			id = id,
 			title = title,
 			author = author,
 			thumbnail = thumbnail,
