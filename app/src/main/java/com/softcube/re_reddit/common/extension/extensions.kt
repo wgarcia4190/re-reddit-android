@@ -4,6 +4,7 @@ import android.view.View
 import android.widget.ImageView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
+import com.google.android.material.textview.MaterialTextView
 import com.softcube.re_reddit.common.GlideInstance
 
 /**
@@ -60,6 +61,11 @@ fun ImageView.loadUrl(url: String?) {
 			.into(this)
 	}
 }
+
+fun MaterialTextView.clearDrawables() {
+	this.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
+}
+
 
 inline fun <reified R> Any?.whatIfNotNullAs(
 	whatIf: (R) -> Unit,

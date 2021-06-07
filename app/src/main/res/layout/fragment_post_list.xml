@@ -44,40 +44,62 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:background="@color/black"
-				android:textColor="@color/text"
-				android:textAllCaps="true"
-				android:text="@string/top_post"
-				android:textStyle="bold"
-				android:textSize="@dimen/top_text"
-				android:padding="@dimen/top_padding"
-				android:gravity="center_vertical"
 				android:drawablePadding="@dimen/top_icon_padding"
+				android:gravity="center_vertical"
+				android:padding="@dimen/top_padding"
+				android:text="@string/top_post"
+				android:textAllCaps="true"
+				android:textColor="@color/text"
+				android:textSize="@dimen/top_text"
+				android:textStyle="bold"
 				app:drawableStartCompat="@drawable/ic_top"
-				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintTop_toBottomOf="@id/divider"/>
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/divider" />
 
 			<View
 				android:id="@+id/sub_header_divider"
 				android:layout_width="0dp"
 				android:layout_height="@dimen/sub_header_divider"
 				android:background="@color/light_divider"
-				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintTop_toBottomOf="@id/sub_header"/>
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/sub_header" />
 
 			<androidx.recyclerview.widget.RecyclerView
 				android:id="@+id/post_list"
 				android:layout_width="match_parent"
 				android:layout_height="0dp"
 				android:background="@color/black"
-				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintBottom_toBottomOf="parent"
-				app:layout_constraintTop_toBottomOf="@id/sub_header_divider"
 				app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+				app:layout_constraintBottom_toTopOf="@id/dismiss_divider"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/sub_header_divider"
 				tools:itemCount="3"
-				tools:listitem="@layout/post_item"/>
+				tools:listitem="@layout/post_item" />
+
+			<View
+				android:id="@+id/dismiss_divider"
+				android:layout_width="0dp"
+				android:layout_height="@dimen/sub_header_divider"
+				android:background="@color/light_divider"
+				app:layout_constraintBottom_toTopOf="@id/dismiss_all_post"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent" />
+
+			<Button
+				android:id="@+id/dismiss_all_post"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:background="@color/primary"
+				android:text="@string/dismiss_all_posts"
+				android:textAllCaps="true"
+				android:textColor="@color/white"
+				android:textStyle="bold"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent" />
 
 		</androidx.constraintlayout.widget.ConstraintLayout>
 	</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

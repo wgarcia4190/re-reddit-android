@@ -1,11 +1,14 @@
 package com.softcube.re_reddit.presentation.post
 
 import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.softcube.re_reddit.R
+import com.softcube.re_reddit.common.extension.clearDrawables
 import com.softcube.re_reddit.databinding.PostItemBinding
 import com.softcube.re_reddit.domain.model.Post
 
@@ -34,7 +37,7 @@ class PostListAdapter(
 			parent,
 			false
 		)
-		return PostViewHolder(binding).apply {
+		return PostViewHolder(binding, downloadCallback).apply {
 			binding.container.setOnClickListener {
 				showPostDetails()
 			}
@@ -64,36 +67,51 @@ class PostListAdapter(
 	override fun getItemCount(): Int = items.size
 
 	override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
-		val postObj = items[position]
-		holder.binding.apply {
-			post = postObj
-			options.setOnClickListener {
-				val popup = PopupMenu(it.context, it)
-				popup.setOnMenuItemClickListener { item ->
-					when (item?.itemId) {
-						R.id.dismiss_post ->
-							true
-						R.id.download -> {
-							postObj.image?.let { image ->
-								downloadCallback(image, postObj.id)
-							}
-							true
-						}
-						else -> false
-					}
-				}
-				popup.inflate(R.menu.post_list_menu)
-				popup.menu.findItem(R.id.download).isVisible = postObj.hasImage()
-				popup.show()
-			}
-
-			executePendingBindings()
-		}
+		holder.bind(getPost(position))
 	}
 
 
 	private fun getPost(index: Int): Post = items[index]
 
-	class PostViewHolder(val binding: PostItemBinding) :
-		RecyclerView.ViewHolder(binding.root)
+	class PostViewHolder(val binding: PostItemBinding, val downloadCallback: DownloadCallback) :
+		RecyclerView.ViewHolder(binding.root), PopupMenu.OnMenuItemClickListener {
+
+		private lateinit var postObj: Post
+
+		fun bind(postObj: Post) {
+			this.postObj = postObj
+			binding.apply {
+				post = postObj
+				options.setOnClickListener {
+					showPopup(it)
+				}
+
+				if(postObj.clicked)
+					status.clearDrawables()
+				executePendingBindings()
+			}
+		}
+
+		private fun showPopup(it: View) {
+			val popup = PopupMenu(it.context, it)
+			popup.setOnMenuItemClickListener(this@PostViewHolder)
+			popup.inflate(R.menu.post_list_menu)
+			popup.menu.findItem(R.id.download).isVisible = postObj.hasImage()
+			popup.show()
+		}
+
+		override fun onMenuItemClick(item: MenuItem?): Boolean {
+			return when (item?.itemId) {
+				R.id.dismiss_post ->
+					true
+				R.id.download -> {
+					postObj.image?.let { image ->
+						downloadCallback(image, postObj.id)
+					}
+					true
+				}
+				else -> false
+			}
+		}
+	}
 }

@@ -23,7 +23,6 @@ data class Post(
 ): Parcelable {
 	fun hasImage(): Boolean = image != null
 	fun getTime(): String = created.toTimeAgo()
-	fun getTotalComments(): String = totalComments.toString()
 }
 
 @Parcelize

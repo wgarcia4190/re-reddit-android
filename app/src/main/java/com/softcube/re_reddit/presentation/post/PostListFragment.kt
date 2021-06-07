@@ -11,7 +11,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.softcube.re_reddit.application.base.BaseFragment
@@ -118,7 +117,6 @@ class PostListFragment : BaseFragment() {
 	}
 
 	private fun addImageToGallery(url: String?, fileName: String) {
-
 		url?.let { path ->
 			try {
 				val dm = requireActivity().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager?

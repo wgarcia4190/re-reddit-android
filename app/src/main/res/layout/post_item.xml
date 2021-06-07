@@ -117,7 +117,7 @@
 				android:textColor="@color/text"
 				android:textSize="@dimen/options_text"
 				android:textStyle="bold"
-				android:text="@{post.getTotalComments()}"
+				android:text="@{Integer.toString(post.totalComments)}"
 				app:drawableStartCompat="@drawable/ic_comments"
 				app:layout_constraintBottom_toBottomOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
